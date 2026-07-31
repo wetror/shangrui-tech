@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深圳市尚瑞電子科技有限公司 | Shenzhen Shangrui Electronic Technology Co., Ltd.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .font-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- 頂部宣告欄 -->
+    <div class="bg-slate-900 text-gray-300 text-xs py-1.5 px-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <span>🌐 深圳市尚瑞電子科技有限公司 | 官方 B2B 批發採購平台</span>
+            <div class="flex items-center gap-4">
+                <span><i class="fa-solid fa-globe mr-1"></i> Language:</span>
+                <select onchange="changeLanguage(this.value)" class="bg-slate-800 text-white text-xs px-2 py-0.5 rounded border border-slate-700 outline-none">
+                    <option value="en">English</option>
+                    <option value="km">ភាសាខ្មែរ (Khmer)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要導覽列 -->
+    <nav class="bg-white shadow-sm border-b sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+                <div class="bg-blue-600 text-white font-black text-xl px-3 py-1 rounded-lg">SR</div>
+                <div>
+                    <h1 class="font-bold text-gray-900 text-base leading-tight">尚瑞電子</h1>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest">Shangrui Electronic</p>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-700">
+                <button onclick="showSection('home')" class="hover:text-blue-600 transition" data-i18n="nav_home">Home</button>
+                <button onclick="showSection('products')" class="hover:text-blue-600 transition" data-i18n="nav_products">Products</button>
+                <button onclick="showSection('about')" class="hover:text-blue-600 transition" data-i18n="nav_about">About Us</button>
+                <button onclick="showSection('feedback')" class="hover:text-blue-600 transition" data-i18n="nav_feedback">Customer Feedback</button>
+                <button onclick="scrollToFooter()" class="hover:text-blue-600 transition" data-i18n="nav_contact">Contact</button>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCartModal()" class="relative p-2 text-gray-700 hover:text-blue-600">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <div id="userNav" class="flex items-center gap-2">
+                    <button onclick="openAuthModal('login')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-1.5 rounded-lg transition" data-i18n="nav_login">Login</button>
+                    <button onclick="openAuthModal('register')" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg transition" data-i18n="nav_register">Register</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容區塊 -->
+    <main class="flex-grow">
+        <!-- 1. 首頁 (Home) -->
+        <section id="view-home" class="space-y-12 pb-12">
+            <!-- Banner -->
+            <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-white py-16 px-4">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="space-y-4 max-w-2xl">
+                        <span class="bg-blue-500/20 text-blue-300 text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30" data-i18n="banner_tag">OEM / ODM Customized Service</span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold leading-tight" data-i18n="banner_title">Premier Partner for 3C Electronics & Mobile Accessories</h2>
+                        <p class="text-gray-300 text-sm md:text-base" data-i18n="banner_desc">Specialized in high-quality wireless chargers, power banks, cases, and car accessories.</p>
+                        <button onclick="showSection('products')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-blue-600/30 text-sm" data-i18n="btn_explore">Explore All Products</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 熱門新品與熱銷 -->
+            <div class="max-w-7xl mx-auto px-4 space-y-6">
+                <h3 class="text-2xl font-bold text-gray-900 border-l-4 border-blue-600 pl-3" data-i18n="section_featured">Featured & Hot Deals</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+                        <img src="https://images.unsplash.com/photo-1622445268465-843d18204642?w=500&q=80" class="w-40 h-40 object-cover rounded-xl flex-shrink-0">
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded" data-i18n="tag_new">New Arrival</span>
+                            <h4 class="font-bold text-lg text-gray-800" data-i18n="prod_new_title">15W Magnetic Foldable 3-in-1 Wireless Charger</h4>
+                            <p class="text-xs text-gray-500" data-i18n="prod_new_desc">Fast charge phone, watch, and earbuds simultaneously.</p>
+                            <div class="text-xl font-black text-blue-600">$29.99 USD</div>
+                            <button onclick="openDetailModal(101)" class="bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">View Details & Select Model</button>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+                        <img src="https://images.unsplash.com/photo-1609592424109-dd9892f1b177?w=500&q=80" class="w-40 h-40 object-cover rounded-xl flex-shrink-0">
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded" data-i18n="tag_hot">Best Seller</span>
+                            <h4 class="font-bold text-lg text-gray-800" data-i18n="prod_hot_title">20000mAh Magnetic Power Bank with Built-in Cable</h4>
+                            <p class="text-xs text-gray-500" data-i18n="prod_hot_desc">Ultra-capacity with Type-C / Lightning cables and PD 22.5W fast charge.</p>
+                            <div class="text-xl font-black text-blue-600">$39.99 USD</div>
+                            <button onclick="openDetailModal(301)" class="bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">View Details & Select Model</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 全系列產品目錄 (Products) -->
+        <section id="view-products" class="max-w-7xl mx-auto px-4 py-8 space-y-6 hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4">
+                <h2 class="text-2xl font-bold text-gray-900" data-i18n="section_products">Product Catalog</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="switchCategory('all')" class="cat-btn bg-blue-600 text-white text-xs px-3 py-1.5 rounded-lg transition" data-cat="all" data-i18n="cat_all">All</button>
+                    <button onclick="switchCategory('case')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs px-3 py-1.5 rounded-lg transition" data-cat="case" data-i18n="cat_case">Cases & Protection</button>
+                    <button onclick="switchCategory('charger')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs px-3 py-1.5 rounded-lg transition" data-cat="charger" data-i18n="cat_charger">Chargers</button>
+                    <button onclick="switchCategory('powerbank')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs px-3 py-1.5 rounded-lg transition" data-cat="powerbank" data-i18n="cat_powerbank">Power Banks</button>
+                    <button onclick="switchCategory('car')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-gray-300 text-xs px-3 py-1.5 rounded-lg transition" data-cat="car" data-i18n="cat_car">Car Accessories</button>
+                </div>
+            </div>
+
+            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+        <!-- 3. 關於我們 (About Us) -->
+        <section id="view-about" class="max-w-4xl mx-auto px-4 py-12 space-y-8 hidden">
+            <div class="text-center space-y-2 border-b pb-6">
+                <h2 class="text-3xl font-extrabold text-gray-900" data-i18n="about_main_title">🏢 關於我們｜About Us</h2>
+                <p class="text-base text-blue-600 font-bold" data-i18n="about_main_sub">Shenzhen Shangrui Electronic Technology Co., Ltd.</p>
+            </div>
+
+            <div class="space-y-6 text-gray-700 leading-relaxed text-sm">
+                <!-- 1. 公司簡介 -->
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
+                    <h3 class="font-bold text-lg text-blue-600" data-i18n="about_sec1_title">🔷 公司簡介</h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="about_sec1_content">
+                        深圳市尚瑞電子科技有限公司（Shenzhen Shangrui Electronic Technology Co., Ltd.）為國內領先的手機配件與通訊周邊專業批發供應商。我們專注於手機配件、3C 電子產品及 OEM／ODM 客製化服務，憑藉強大的供應鏈整合能力與嚴格的品質控管，致力於提供高品質產品、穩定供貨與完善售後服務，攜手全球合作夥伴共創商機。
+                    </p>
+                </div>
+
+                <!-- 2. 品牌故事 -->
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
+                    <h3 class="font-bold text-lg text-blue-600" data-i18n="about_sec2_title">🔷 品牌故事</h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="about_sec2_content">
+                        隨著智慧型手機的普及與技術更迭，配件早已不只是單純的防護工具，更是展現個人風格與提升生活便利的核心周邊。深圳市尚瑞電子科技有限公司創立的初衷，源於對品質與創新不妥協的堅持。我們看見了市場上劣質配件帶來的消費疑慮，因此立志扮演「品質的守門員」與「通訊店家的最強後盾」，讓每一位合作夥伴都能安心拿貨、輕鬆獲利。
+                    </p>
+                </div>
+
+                <!-- 3. 經營理念 -->
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
+                    <h3 class="font-bold text-lg text-blue-600" data-i18n="about_sec3_title">🔷 經營理念</h3>
+                    <ul class="space-y-4">
+                        <li class="border-l-2 border-blue-500 pl-3">
+                            <strong class="text-gray-900 block font-bold" data-i18n="about_sec3_p1_t">品質至上</strong>
+                            <span class="text-xs text-gray-600" data-i18n="about_sec3_p1_c">從原料採購到成品出貨，堅持嚴格品檢，絕不為了成本犧牲品質。</span>
+                        </li>
+                        <li class="border-l-2 border-blue-500 pl-3">
+                            <strong class="text-gray-900 block font-bold" data-i18n="about_sec3_p2_t">互利共贏</strong>
+                            <span class="text-xs text-gray-600" data-i18n="about_sec3_p2_c">提供極具市場競爭力的批發價格與彈性起訂量（MOQ），與客戶共同成長。</span>
+                        </li>
+                        <li class="border-l-2 border-blue-500 pl-3">
+                            <strong class="text-gray-900 block font-bold" data-i18n="about_sec3_p3_t">創新敏捷</strong>
+                            <span class="text-xs text-gray-600" data-i18n="about_sec3_p3_c">緊跟各大手機品牌（Apple、Samsung 等）新機發布節奏，第一時間提供最新、最齊全的配件選擇。</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 4. 發展歷史 -->
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-blue-600" data-i18n="about_sec4_title">🔷 發展歷史</h3>
+                    <div class="space-y-3 border-l-2 border-gray-200 ml-2 pl-4">
+                        <div class="relative">
+                            <div class="font-bold text-sm text-gray-900">2020 年</div>
+                            <p class="text-xs text-gray-600" data-i18n="about_h_2020">深圳市尚瑞電子科技有限公司正式成立，建立第一代實體批發倉儲，展開線下通訊通路供貨。</p>
+                        </div>
+                        <div class="relative">
+                            <div class="font-bold text-sm text-gray-900">2022 年</div>
+                            <p class="text-xs text-gray-600" data-i18n="about_h_2022">拓展直營工廠合作，建立專屬 QA 品質檢測團隊，品項突破 1,000 款。</p>
+                        </div>
+                        <div class="relative">
+                            <div class="font-bold text-sm text-gray-900">2023 年</div>
+                            <p class="text-xs text-gray-600" data-i18n="about_h_2023">啟動數位化轉型，上線 B2B 線上批發採購系統，提供 24 小時快速下單服務。</p>
+                        </div>
+                        <div class="relative">
+                            <div class="font-bold text-sm text-gray-900">2025 年</div>
+                            <p class="text-xs text-gray-600" data-i18n="about_h_2025">導入自動化倉儲管理（WMS），實現「當日下單、隔日出貨」的高效配送網絡。</p>
+                        </div>
+                        <div class="relative">
+                            <div class="font-bold text-sm text-blue-600">至今</div>
+                            <p class="text-xs text-gray-600" data-i18n="about_h_now">服務超過 2,000+ 家實體門市與線上賣家，成為各大通訊通路的指定合作夥伴。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. 品質保證 -->
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
+                    <h3 class="font-bold text-lg text-blue-600" data-i18n="about_sec5_title">🔷 品質保證</h3>
+                    <p class="text-xs text-gray-500 mb-2" data-i18n="about_sec5_intro">我們深知品質是批發業務的命脈。尚瑞電子所有商品均通過嚴格的品管流程：</p>
+                    <ul class="space-y-2 text-xs text-gray-600">
+                        <li>• <strong class="text-gray-800" data-i18n="about_q1_t">認證把關：</strong> <span data-i18n="about_q1_c">充電器材類全面符合相關安全認證及多重安全防護機制（過充、過熱、短路保護）。</span></li>
+                        <li>• <strong class="text-gray-800" data-i18n="about_q2_t">實機開模：</strong> <span data-i18n="about_q2_c">所有保護殼與保護貼均採用真機 1:1 精密開模，確保孔位與按鍵完美貼合。</span></li>
+                        <li>• <strong class="text-gray-800" data-i18n="about_q3_t">嚴苛測試：</strong> <span data-i18n="about_q3_c">防摔殼均經過多角度落摔測試；保護貼採用高鋁鋼化玻璃，確保 9H 抗刮強度。</span></li>
+                    </ul>
+                </div>
+
+                <!-- 6. 售後服務 -->
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
+                    <h3 class="font-bold text-lg text-blue-600" data-i18n="about_sec6_title">🔷 售後服務</h3>
+                    <p class="text-xs text-gray-500 mb-2" data-i18n="about_sec6_intro">為提供合作夥伴無後顧之憂的採購體驗，我們提供完善的 B2B 售後保障機制：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                            <h4 class="font-bold text-sm text-gray-800 mb-1" data-i18n="about_s1_t">瑕疵包退換</h4>
+                            <p class="text-xs text-gray-600" data-i18n="about_s1_c">收到商品 7 天內如有非人為新品不良或瑕疵，提供無條件退換貨服務。</p>
+                        </div>
+                        <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                            <h4 class="font-bold text-sm text-gray-800 mb-1" data-i18n="about_s2_t">長期保固承諾</h4>
+                            <p class="text-xs text-gray-600" data-i18n="about_s2_c">電子類及充電周邊提供完善原廠保固，售後無憂。</p>
+                        </div>
+                        <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                            <h4 class="font-bold text-sm text-gray-800 mb-1" data-i18n="about_s3_t">專屬一對一客服</h4>
+                            <p class="text-xs text-gray-600" data-i18n="about_s3_c">配備企業專屬客戶經理，快速回應大宗詢價、OEM/ODM 客製化需求與售後問題。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 客戶反饋 (Customer Feedback) -->
+        <section id="view-feedback" class="max-w-5xl mx-auto px-4 py-12 space-y-8 hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-6 gap-4">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-gray-900" data-i18n="feedback_title">💬 Customer Feedback</h2>
+                    <p class="text-xs text-gray-500 mt-1" data-i18n="feedback_sub">Real reviews and ratings from our global B2B partners & retail shop owners.</p>
+                </div>
+                <button onclick="openFeedbackModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> <span data-i18n="btn_write_feedback">Write Feedback</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
+                <div class="text-center space-y-1 border-r border-blue-100 last:border-0">
+                    <div class="text-3xl font-black text-blue-600">4.9 / 5.0</div>
+                    <div class="text-yellow-400 text-sm">★★★★★</div>
+                    <div class="text-xs text-gray-500" data-i18n="stat_overall">Overall Partner Rating</div>
+                </div>
+                <div class="text-center space-y-1 border-r border-blue-100 last:border-0">
+                    <div class="text-3xl font-black text-blue-600">99.2%</div>
+                    <div class="text-xs text-gray-500" data-i18n="stat_delivery">On-Time Delivery Rate</div>
+                </div>
+                <div class="text-center space-y-1">
+                    <div class="text-3xl font-black text-blue-600">2,000+</div>
+                    <div class="text-xs text-gray-500" data-i18n="stat_partners">Active Retail Partners</div>
+                </div>
+            </div>
+
+            <div id="feedbackContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+    </main>
+
+    <!-- 商品詳情 Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative shadow-2xl">
+            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold">✕</button>
+            <div id="detailModalContent" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <!-- 寫下反饋 Modal -->
+    <div id="feedbackModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">✕</button>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Submit Your Feedback</h3>
+            <form onsubmit="handleFeedbackSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Company / Store Name *</label>
+                    <input type="text" id="fbCompany" required class="w-full border rounded-lg px-3 py-2 text-xs border-gray-300 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Rating *</label>
+                    <select id="fbRating" class="w-full border rounded-lg px-3 py-2 text-xs border-gray-300 focus:outline-none focus:border-blue-500">
+                        <option value="5">★★★★★ (5/5) Excellent Quality</option>
+                        <option value="4">★★★★☆ (4/5) Good Experience</option>
+                        <option value="3">★★★☆☆ (3/5) Average</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Feedback Comment *</label>
+                    <textarea id="fbComment" required rows="4" class="w-full border rounded-lg px-3 py-2 text-xs border-gray-300 focus:outline-none focus:border-blue-500" placeholder="Share your experience with our product quality and shipping..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 購物車 Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black/60 z-50 flex justify-end hidden backdrop-blur-sm">
+        <div class="bg-white w-full max-w-md h-full p-6 flex flex-col justify-between shadow-xl">
+            <div>
+                <div class="flex items-center justify-between border-b pb-4 mb-4">
+                    <h3 class="font-bold text-lg text-gray-800" data-i18n="cart_title">Your Shopping Cart</h3>
+                    <button onclick="toggleCartModal()" class="text-gray-400 hover:text-gray-700">✕</button>
+                </div>
+                <div id="cartItemsList" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
+            </div>
+            <div class="border-t pt-4 space-y-4">
+                <div class="flex justify-between font-extrabold text-lg">
+                    <span data-i18n="cart_total">Total: </span>
+                    <span id="cartTotal" class="text-blue-600">$0.00 USD</span>
+                </div>
+                <button onclick="proceedToCheckout()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition text-sm">Checkout Order (USD)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增：結算下單/收件資訊 Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl space-y-4">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">✕</button>
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-bold text-gray-800">📦 收件資訊｜Shipping Information</h3>
+                <p class="text-xs text-gray-500">Please fill in your delivery details to complete the order.</p>
+            </div>
+            <form onsubmit="handleFinalOrderSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">收件人姓名 / Recipient Name *</label>
+                    <input type="text" id="shipName" required placeholder="e.g. John Doe" class="w-full border rounded-lg px-3 py-2 text-xs border-gray-300 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">聯絡電話 / Phone Number *</label>
+                    <input type="tel" id="shipPhone" required placeholder="e.g. +855 12 345 678" class="w-full border rounded-lg px-3 py-2 text-xs border-gray-300 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">詳細收件地址 / Delivery Address *</label>
+                    <textarea id="shipAddress" required rows="3" placeholder="e.g. No. 123, St 271, Phnom Penh, Cambodia" class="w-full border rounded-lg px-3 py-2 text-xs border-gray-300 focus:outline-none focus:border-blue-500"></textarea>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-xl text-xs space-y-1">
+                    <div class="flex justify-between font-bold text-gray-700">
+                        <span>Order Total Amount:</span>
+                        <span id="checkoutTotalAmount" class="text-blue-600 font-extrabold">$0.00 USD</span>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-xs transition shadow-md">Confirm & Submit Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 會員 Modal (登入/註冊) -->
+    <div id="authModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">✕</button>
+            <div id="authContent"></div>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer id="mainFooter" class="bg-slate-900 text-gray-400 text-xs py-10 px-4 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-3">
+                <h4 class="text-white font-bold text-sm">Shenzhen Shangrui Electronic Technology Co., Ltd.</h4>
+                <p class="leading-relaxed" data-i18n="footer_about">Focused on mobile accessories and 3C electronics OEM/ODM services.</p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="text-white font-bold text-sm" data-i18n="footer_contact_title">Contact Us</h4>
+                <p><span data-i18n="addr_lbl">Address: </span>Bantian, Longgang District, Shenzhen, China</p>
+                <p>Email: sales@shangruitech.com</p>
+                <p>Hotline: +86 0755-88888888</p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="text-white font-bold text-sm" data-i18n="footer_service_title">Service Hours</h4>
+                <p><span data-i18n="hours_lbl">Hours: </span>Mon - Fri 09:00 - 18:00 (UTC+8)</p>
+                <p>© 2026 Shenzhen Shangrui Electronic Technology Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 邏輯區 -->
+    <script>
+        // 產品資料庫
+        const products = [
+            { id: 101, category: 'charger', name: '15W Magnetic Foldable 3-in-1 Wireless Charger', price: 29.99, img: 'https://images.unsplash.com/photo-1622445268465-843d18204642?w=500&q=80', desc: 'Crafted with aerospace-grade aluminum alloy, supporting simultaneous fast charging for phone (15W), watch (3W), and earbuds (5W).' },
+            { id: 102, category: 'charger', name: '65W GaN Fast Charger (2C1A)', price: 24.99, img: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500&q=80', desc: 'Latest GaN chip technology offering high power in a compact design.' },
+            { id: 103, category: 'case', name: 'MagSafe Clear Anti-Yellowing Case', price: 12.99, img: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500&q=80', desc: 'Built-in 36 N52 magnets with original magnetic force.' },
+            { id: 104, category: 'case', name: '9H Tempered Glass Screen Protector (2-Pack)', price: 8.99, img: 'https://images.unsplash.com/photo-1541877944-ac82a091518a?w=500&q=80', desc: 'High aluminum tempered glass with oleophobic coating.' },
+            { id: 205, category: 'charger', name: '100W PD Braided Fast Charging Cable (2M)', price: 9.99, img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&q=80', desc: 'E-Mark smart chip supporting 100W power delivery.' },
+            { id: 301, category: 'powerbank', name: '20000mAh Magnetic Power Bank with Cables', price: 39.99, img: 'https://images.unsplash.com/photo-1609592424109-dd9892f1b177?w=500&q=80', desc: 'Ultra-capacity with built-in Type-C & Lightning cables.' },
+            { id: 401, category: 'car', name: '15W Car Magnetic Wireless Charger Mount', price: 18.99, img: 'https://images.unsplash.com/photo-1541877944-ac82a091518a?w=500&q=80', desc: 'Auto-magnetic lock with 360-degree rotation.' }
+        ];
+
+        // 手機型號
+        const phoneModels = [
+            'iPhone 16 Pro Max', 'iPhone 16 Pro', 'iPhone 16 Plus', 'iPhone 16',
+            'iPhone 15 Pro Max', 'iPhone 15 Pro', 'iPhone 15',
+            'Samsung Galaxy S24 Ultra', 'Samsung Galaxy S24+',
+            'Standard Fit / Universal'
+        ];
+
+        // 客戶反饋初始數據
+        let feedbackList = [
+            { id: 1, company: "TechMobile Shop (Phnom Penh)", rating: 5, comment: "Excellent products! The MagSafe cases are top quality and my customers love them. Delivery to Cambodia was very fast.", date: "2026-03-12" },
+            { id: 2, company: "Global Wireless B2B (USA)", rating: 5, comment: "Shangrui has been our trusted supplier for 2 years. Their 65W GaN chargers have zero defect rates. Highly recommended!", date: "2026-02-28" },
+            { id: 3, company: "Digital Telecom Retail", rating: 5, comment: "Very professional OEM service and great communication. Looking forward to our next big bulk order.", date: "2026-01-15" }
+        ];
+
+        // 多語言字典
+        const translations = {
+            'en': {
+                nav_home: 'Home', nav_about: 'About Us', nav_products: 'Products', nav_feedback: 'Customer Feedback', nav_contact: 'Contact',
+                nav_login: 'Login', nav_register: 'Register', banner_tag: 'OEM / ODM Customized Service',
+                banner_title: 'Premier Partner for 3C Electronics & Mobile Accessories', banner_desc: 'Specialized in high-quality wireless chargers, power banks, cases, and car accessories.',
+                btn_explore: 'Explore All Products', section_featured: 'Featured & Hot Deals', tag_new: 'New Arrival',
+                prod_new_title: '15W Magnetic Foldable 3-in-1 Wireless Charger', prod_new_desc: 'Fast charge phone, watch, and earbuds simultaneously.',
+                tag_hot: 'Best Seller', prod_hot_title: '20000mAh Magnetic Power Bank with Built-in Cable', prod_hot_desc: 'Ultra-capacity with built-in cables and PD 22.5W fast charge.',
+                section_products: 'Product Catalog', cat_all: 'All', cat_case: 'Cases & Protection', cat_charger: 'Chargers',
+                cat_powerbank: 'Power Banks', cat_car: 'Car Accessories', footer_about: 'Focused on mobile accessories and OEM/ODM service.',
+                footer_contact_title: 'Contact Us', addr_lbl: 'Address: ', footer_service_title: 'Service Hours', hours_lbl: 'Hours: ',
+                cart_title: 'Your Shopping Cart', cart_total: 'Total: ',
+                
+                about_main_title: '🏢 About Us', about_main_sub: 'Shenzhen Shangrui Electronic Technology Co., Ltd.',
+                about_sec1_title: '🔷 Company Profile',
+                about_sec1_content: 'Shenzhen Shangrui Electronic Technology Co., Ltd. is a leading professional wholesale supplier of mobile phone accessories and communication peripherals in China...',
+                about_sec2_title: '🔷 Brand Story',
+                about_sec2_content: 'With the popularity of smartphones and technological advances, accessories are no longer just simple protective tools...',
+                about_sec3_title: '🔷 Business Philosophy',
+                about_sec3_p1_t: 'Quality First', about_sec3_p1_c: 'Strict QA procedures guaranteed.',
+                about_sec3_p2_t: 'Win-Win Cooperation', about_sec3_p2_c: 'Competitive wholesale pricing.',
+                about_sec3_p3_t: 'Agile Innovation', about_sec3_p3_c: 'Keeping pace with major phone releases.',
+                about_sec4_title: '🔷 Development History',
+                about_h_2020: 'Official establishment of Shenzhen Shangrui Electronic Technology Co., Ltd.',
+                about_h_2022: 'Expanded factory partnerships and QA team.',
+                about_h_2023: 'Digital transformation with B2B online portal.',
+                about_h_2025: 'Implemented WMS system for same-day dispatch.',
+                about_h_now: 'Serving over 2,000+ retail stores worldwide.',
+                about_sec5_title: '🔷 Quality Assurance',
+                about_sec5_intro: 'Quality is our lifeblood. All products pass strict QC:',
+                about_q1_t: 'Safety Certified: ', about_q1_c: 'Overcharge and overheat protection.',
+                about_q2_t: '1:1 Precision Mold: ', about_q2_c: 'Molded using real devices.',
+                about_q3_t: 'Rigorous Testing: ', about_q3_c: 'Drop tests and 9H glass hardness.',
+                about_sec6_title: '🔷 After-Sales Service',
+                about_sec6_intro: 'Comprehensive B2B protection mechanism:',
+                about_s1_t: 'Defect Return Policy', about_s1_c: 'Replacement within 7 days for factory defects.',
+                about_s2_t: 'Long-term Warranty', about_s2_c: 'Official original warranty.',
+                about_s3_t: 'Dedicated 1-on-1 Support', about_s3_c: 'Personal account manager.',
+
+                feedback_title: '💬 Customer Feedback', feedback_sub: 'Real reviews and ratings from our global B2B partners.',
+                btn_write_feedback: 'Write Feedback', stat_overall: 'Overall Partner Rating', stat_delivery: 'On-Time Delivery Rate', stat_partners: 'Active Retail Partners'
+            },
+            'km': {
+                nav_home: 'ទំព័រដើម', nav_about: 'អំពីយើង', nav_products: 'ផលិតផល', nav_feedback: 'មតិកែលម្អអតិថិជន', nav_contact: 'ទំនាក់ទំនង',
+                nav_login: 'ចូល', nav_register: 'ចុះឈ្មោះ', banner_tag: 'សេវាកម្ម OEM / ODM',
+                banner_title: 'ដៃគូល្អបំផុតសម្រាប់គ្រឿងបន្លាស់ទូរស័ព្ទ', banner_desc: 'ឯកទេសខាងឆ្នាំងសាកឥតខ្សែ ថ្មជំនួយ និងស្រោមទូរស័ព្ទគុណភាពខ្ពស់។',
+                btn_explore: 'មើលផលិតផលទាំងអស់', section_featured: 'ផលិតផលពេញនិយម', tag_new: 'ថ្មី',
+                prod_new_title: 'ឆ្នាំងសាកឥតខ្សែ 15W Foldable 3-in-1', prod_new_desc: 'សាកថ្មទូរស័ព្ទ នាឡិកា និងកាសក្នុងពេលតែមួយ។',
+                tag_hot: 'លក់ដាច់បំផុត', prod_hot_title: 'ថ្មជំនួយ 20000mAh Magnetic', prod_hot_desc: 'សមត្ថភាពធំជាមួយខ្សែភ្ជាប់ស្រាប់ PD 22.5W',
+                section_products: 'កាតាឡុកផលិតផល', cat_all: 'ទាំងអស់', cat_case: 'ស្រោមទូរស័ព្ទ', cat_charger: 'ឆ្នាំងសាក',
+                cat_powerbank: 'ថ្មជំនួយ', cat_car: 'គ្រឿងបន្លាស់ឡាន', footer_about: 'ផ្ដោតលើសេវាកម្ម OEM/ODM គ្រឿងបន្លាស់ទូរស័ព្ទ។',
+                footer_contact_title: 'ទំនាក់ទំនង', addr_lbl: 'អាសយដ្ឋាន៖ ', footer_service_title: 'ម៉ោងធ្វើការ', hours_lbl: 'ម៉ោង៖ ',
+                cart_title: 'កន្ត្រកទំនិញរបស់អ្នក', cart_total: 'សរុប៖ ',
+                
+                about_main_title: '🏢 អំពីយើង', about_main_sub: 'Shenzhen Shangrui Electronic Technology Co., Ltd.',
+                about_sec1_title: '🔷 ប្រវត្តិក្រុមហ៊ុន',
+                about_sec1_content: 'Shenzhen Shangrui Electronic Technology Co., Ltd. គឺជាអ្នកផ្គត់ផ្គង់ B2B ឈានមុខគេ...',
+                about_sec2_title: '🔷 រឿងរ៉ាវម៉ាកយីហោ', about_sec2_content: 'យើងប្តេជ្ញាផ្តល់ជូននូវផលិតផលដែលមានគុណភាពខ្ពស់...',
+                about_sec3_title: '🔷 ទស្សនវិជ្ជាអាជីវកម្ម',
+                about_sec3_p1_t: 'គុណភាពជាចម្បង', about_sec3_p1_c: 'ការត្រួតពិនិត្យគុណភាពយ៉ាងម៉ត់ចត់。',
+                about_sec3_p2_t: 'ឈ្នះ-ឈ្នះ', about_sec3_p2_c: 'តម្លៃបោះដុំដែលមានការប្រកួតប្រជែង。',
+                about_sec3_p3_t: 'ការច្នៃប្រឌិត', about_sec3_p3_c: 'ផ្តល់ជូននូវផលិតផលចុងក្រោយបំផុត。',
+                about_sec4_title: '🔷 ប្រវត្តិអភិវឌ្ឍន៍',
+                about_h_2020: 'បង្កើតក្រុមហ៊ុនជាផ្លូវការ និងបង្កើតឃ្លាំងដំបូង。',
+                about_h_2022: 'ពង្រីកក្រុមការងារត្រួតពិនិត្យគុណភាព (QA)。',
+                about_h_2023: 'ដាក់ឱ្យប្រើប្រាស់ប្រព័ន្ធបញ្ជាទិញ B2B តាមអនឡាញ。',
+                about_h_2025: 'ប្រព័ន្ធគ្រប់គ្រងឃ្លាំងស្វ័យប្រវត្តិ WMS。',
+                about_h_now: 'បម្រើហាងលក់រាយជាង ២,០០០+。',
+                about_sec5_title: '🔷 ការធានាគុណភាព', about_sec5_intro: 'គុណភាពគឺជាបេះដូងនៃអាជីវកម្មរបស់យើង៖',
+                about_q1_t: 'ស្តង់ដារសុវត្ថិភាព៖ ', about_q1_c: 'ការពារការឡើងកម្តៅ និងឆ្លងចរន្តអគ្គិសនី。',
+                about_q2_t: 'ពុម្ពជាក់ស្តែង 1:1៖ ', about_q2_c: 'ត្រូវគ្នាឥតខ្ចោះជាមួយទូរស័ព្ទ。',
+                about_q3_t: 'ការធ្វើតេស្តយ៉ាងម៉ត់ចត់៖ ', about_q3_c: 'កញ្ចក់ការពារ 9H រឹងមាំខ្ពស់。',
+                about_sec6_title: '🔷 សេវាកម្មក្រោយការលក់', about_sec6_intro: 'ការការពារ B2B ដ៏ទូលំទូលាយ៖',
+                about_s1_t: 'ការផ្លាស់ប្តូរទំនិញ', about_s1_c: 'ដោះដូរថ្មីក្នុងរយៈពេល ៧ ថ្ងៃ។',
+                about_s2_t: 'ការធានារយៈពេលវែង', about_s2_c: 'ការធានាផ្លូវការលើផលិតផលអេឡិចត្រូនិក。',
+                about_s3_t: 'សេវាកម្មអតិថិជនពិសេស', about_s3_c: 'អ្នកគ្រប់គ្រងគណនីផ្ទាល់ខ្លួនសម្រាប់អ្នក。',
+
+                feedback_title: '💬 មតិកែលម្អអតិថិជន', feedback_sub: 'ការពិនិត្យពិតប្រាកដពីដៃគូ B2B របស់យើង។',
+                btn_write_feedback: 'សរសេរមតិ', stat_overall: 'ការវាយតម្លៃសរុប', stat_delivery: 'អត្រាដឹកជញ្ជូនទាន់ពេលវេលា', stat_partners: 'ដៃគូសកម្ម'
+            }
+        };
+
+        // 全局狀態
+        let currentLang = 'en';
+        let currentCategory = 'all';
+        let cart = [];
+        let modalQty = 1;
+        let currentUser = null;
+        let registeredUsers = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderFeedback();
+            updateCartCount();
+        });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const dict = translations[lang] || translations['en'];
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (dict[key]) elem.innerText = dict[key];
+            });
+        }
+
+        function showSection(sectionId) {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-about').classList.add('hidden');
+            document.getElementById('view-products').classList.add('hidden');
+            document.getElementById('view-feedback').classList.add('hidden');
+            document.getElementById('view-' + sectionId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToFooter() {
+            document.getElementById('mainFooter').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="h-44 overflow-hidden bg-gray-100">
+                            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-4 space-y-1">
+                            <h3 class="font-bold text-gray-800 text-sm line-clamp-1">${p.name}</h3>
+                            <p class="text-xs text-gray-500 line-clamp-2">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-3">
+                        <div class="text-lg font-black text-blue-600">$${p.price.toFixed(2)} USD</div>
+                        <button onclick="openDetailModal(${p.id})" class="w-full bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold py-2 rounded-lg transition">Select Model & Buy</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderFeedback() {
+            const container = document.getElementById('feedbackContainer');
+            container.innerHTML = '';
+
+            feedbackList.forEach(item => {
+                const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+                const card = document.createElement('div');
+                card.className = "bg-white border rounded-2xl p-6 shadow-sm space-y-3";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="font-bold text-sm text-gray-800">${item.company}</div>
+                        <div class="text-xs text-gray-400">${item.date}</div>
+                    </div>
+                    <div class="text-yellow-400 text-xs">${stars}</div>
+                    <p class="text-xs text-gray-600 leading-relaxed">"${item.comment}"</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openFeedbackModal() {
+            document.getElementById('feedbackModal').classList.remove('hidden');
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.add('hidden');
+        }
+
+        function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            const company = document.getElementById('fbCompany').value;
+            const rating = parseInt(document.getElementById('fbRating').value);
+            const comment = document.getElementById('fbComment').value;
+
+            feedbackList.unshift({
+                id: Date.now(),
+                company: company,
+                rating: rating,
+                comment: comment,
+                date: new Date().toISOString().split('T')[0]
+            });
+
+            renderFeedback();
+            closeFeedbackModal();
+            alert('Thank you! Your feedback has been submitted successfully.');
+        }
+
+        function openDetailModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            modalQty = 1;
+
+            const modalContent = document.getElementById('detailModalContent');
+            modalContent.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6">
+                    <img src="${product.img}" class="w-full md:w-1/2 h-56 object-cover rounded-xl border">
+                    <div class="space-y-4 md:w-1/2">
+                        <h3 class="text-xl font-bold text-gray-900">${product.name}</h3>
+                        <div class="text-2xl font-black text-blue-600">$${product.price.toFixed(2)} USD</div>
+                        
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-gray-700">Select Phone Model *</label>
+                            <select id="selectedModel" class="w-full border rounded-lg px-3 py-2 text-xs bg-gray-50 border-gray-300 focus:outline-none focus:border-blue-500">
+                                ${phoneModels.map(m => `<option value="${m}">${m}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-gray-700">Quantity *</label>
+                            <div class="flex items-center gap-3">
+                                <button onclick="updateModalQty(-1, ${product.price})" class="w-8 h-8 bg-gray-200 rounded-lg font-bold text-gray-700 hover:bg-gray-300">-</button>
+                                <span id="modalQtyDisplay" class="font-bold text-sm w-8 text-center">1</span>
+                                <button onclick="updateModalQty(1, ${product.price})" class="w-8 h-8 bg-gray-200 rounded-lg font-bold text-gray-700 hover:bg-gray-300">+</button>
+                            </div>
+                        </div>
+
+                        <div class="text-xs text-gray-500 pt-1">
+                            Subtotal: <span id="modalSubtotal" class="font-bold text-gray-800 text-sm">$${product.price.toFixed(2)} USD</span>
+                        </div>
+
+                        <button onclick="confirmAddToCart(${product.id})" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl transition text-xs shadow-md">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border-t pt-4 space-y-2">
+                    <h4 class="font-bold text-sm text-gray-800">📋 Specifications & Features</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100">${product.desc}</p>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function updateModalQty(delta, unitPrice) {
+            modalQty += delta;
+            if (modalQty < 1) modalQty = 1;
+            document.getElementById('modalQtyDisplay').innerText = modalQty;
+            document.getElementById('modalSubtotal').innerText = '$' + (unitPrice * modalQty).toFixed(2) + ' USD';
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        function confirmAddToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const model = document.getElementById('selectedModel').value;
+
+            const cartKey = `${productId}-${model}`;
+            const existing = cart.find(item => item.key === cartKey);
+
+            if (existing) {
+                existing.qty += modalQty;
+            } else {
+                cart.push({
+                    key: cartKey,
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    img: product.img,
+                    model: model,
+                    qty: modalQty
+                });
+            }
+
+            updateCartCount();
+            closeDetailModal();
+            alert(`Added "${product.name} (${model})" x ${modalQty} to cart!`);
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').innerText = count;
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                renderCartList();
+            }
+        }
+
+        function renderCartList() {
+            const container = document.getElementById('cartItemsList');
+            const totalElem = document.getElementById('cartTotal');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">Your cart is empty</div>`;
+                totalElem.innerText = '$0.00 USD';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between gap-3 border-b pb-3";
+                div.innerHTML = `
+                    <img src="${item.img}" class="w-12 h-12 rounded object-cover flex-shrink-0">
+                    <div class="flex-grow min-w-0">
+                        <div class="text-xs font-bold text-gray-800 truncate">${item.name}</div>
+                        <div class="text-[10px] text-blue-600 font-semibold">Model: ${item.model}</div>
+                        <div class="text-xs text-gray-500">$${item.price.toFixed(2)} x ${item.qty}</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="changeCartQty(${index}, -1)" class="w-5 h-5 bg-gray-200 rounded text-xs font-bold">-</button>
+                        <span class="text-xs font-bold">${item.qty}</span>
+                        <button onclick="changeCartQty(${index}, 1)" class="w-5 h-5 bg-gray-200 rounded text-xs font-bold">+</button>
+                        <button onclick="removeCartItem(${index})" class="text-red-500 text-xs ml-1"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            totalElem.innerText = '$' + total.toFixed(2) + ' USD';
+        }
+
+        function changeCartQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartCount();
+            renderCartList();
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            renderCartList();
+        }
+
+        // 點擊結算按鈕時觸發
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            if (!currentUser) {
+                alert('🔒 Notice: Please login or register an account before placing an order.');
+                toggleCartModal();
+                openAuthModal('login');
+                return;
+            }
+
+            // 計算總額並顯示結算 Modal
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('checkoutTotalAmount').innerText = '$' + total.toFixed(2) + ' USD';
+            
+            toggleCartModal(); // 關閉購物車側邊欄
+            document.getElementById('checkoutModal').classList.remove('hidden'); // 打開收件資訊表單 Modal
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        // 提交最終訂單（包含姓名、電話、地址驗證）
+        function handleFinalOrderSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('shipName').value.trim();
+            const phone = document.getElementById('shipPhone').value.trim();
+            const address = document.getElementById('shipAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                alert('⚠️ Please fill in all required shipping fields (Name, Phone, Address).');
+                return;
+            }
+
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            alert(`🎉 Order Placed Successfully!\n\nOrder Details:\n• Account: ${currentUser.name}\n• Recipient: ${name}\n• Phone: ${phone}\n• Address: ${address}\n• Total Amount: $${totalAmount.toFixed(2)} USD\n\nThank you for choosing Shangrui Electronics! Our manager will process your dispatch shortly.`);
+
+            // 清空購物車與表單
+            cart = [];
+            updateCartCount();
+            document.getElementById('shipName').value = '';
+            document.getElementById('shipPhone').value = '';
+            document.getElementById('shipAddress').value = '';
+            closeCheckoutModal();
+        }
+
+        // 會員系統
+        function openAuthModal(mode) {
+            const modal = document.getElementById('authModal');
+            const content = document.getElementById('authContent');
+            content.innerHTML = `
+                <h3 class="text-lg font-bold text-gray-800 mb-4">${mode === 'login' ? 'Member Login | B2B Login' : 'Create B2B Account'}</h3>
+                <form onsubmit="handleAuthSubmit(event, '${mode}')" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Email / Account *</label>
+                        <input type="email" id="authEmail" required class="w-full border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Password *</label>
+                        <input type="password" id="authPassword" required class="w-full border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg text-xs mt-2 transition">${mode === 'login' ? 'Login' : 'Register Now'}</button>
+                </form>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        function handleAuthSubmit(e, mode) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+
+            if (mode === 'login') {
+                const found = registeredUsers.find(u => u.email === email && u.password === password);
+                if (!found) {
+                    alert('❌ Account does not exist or incorrect password! Please register first.');
+                    openAuthModal('register');
+                    return;
+                }
+                currentUser = found;
+                alert(`Welcome back, ${currentUser.name}!`);
+            } else {
+                const existing = registeredUsers.find(u => u.email === email);
+                if (existing) {
+                    alert('⚠️ This email is already registered. Please login directly.');
+                    openAuthModal('login');
+                    return;
+                }
+                const newUser = { email: email, password: password, name: email.split('@')[0] || 'B2B Partner' };
+                registeredUsers.push(newUser);
+                currentUser = newUser;
+                alert(`🎉 Registration successful! Logged in as ${currentUser.name}.`);
+            }
+
+            document.getElementById('userNav').innerHTML = `
+                <span class="text-xs text-blue-600 font-bold">👤 ${currentUser.name}</span>
+                <button onclick="logout()" class="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-gray-700 transition">Logout</button>
+            `;
+
+            closeAuthModal();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('userNav').innerHTML = `
+                <button onclick="openAuthModal('login')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-1.5 rounded-lg transition" data-i18n="nav_login">Login</button>
+                <button onclick="openAuthModal('register')" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg transition" data-i18n="nav_register">Register</button>
+            `;
+            alert('Logged out successfully.');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
